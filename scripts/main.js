@@ -1,4 +1,4 @@
-async function fetchEmojies() {
+async function fetchEmojis() {
   const response = await fetch("https://api.github.com/emojis");
   return await response.json();
 }
@@ -6,7 +6,7 @@ async function fetchEmojies() {
 function showLoader() {
   const loader = document.createElement("p");
   loader.classList.add("loader");
-  loader.textContent = "Loading emojies...";
+  loader.textContent = "Loading emojis...";
   const $controls = document.querySelector("#controls");
   $controls?.appendChild(loader);
 }
@@ -16,7 +16,7 @@ function hideLoader() {
   loader?.remove();
 }
 
-function clearEmojies() {
+function clearEmojis() {
   const $outlet = document.querySelector("#outlet");
 
   while ($outlet?.firstChild) {
@@ -39,7 +39,7 @@ function renderEmoji(url, name) {
   return button;
 }
 
-function renderEmojiesList(data) {
+function renderEmojisList(data) {
   const $outlet = document.querySelector("#outlet");
   const table = document.createElement("table");
   const thead = document.createElement("thead");
@@ -68,7 +68,7 @@ function renderEmojiesList(data) {
   $outlet?.appendChild(table);
 }
 
-function renderEmojiesGrid(data) {
+function renderEmojisGrid(data) {
   const $outlet = document.querySelector("#outlet");
   const list = document.createElement("ul");
 
@@ -85,11 +85,11 @@ function renderEmojiesGrid(data) {
 function renderEmptyState() {
   const $outlet = document.querySelector("#outlet");
   const message = document.createElement("p");
-  message.textContent = "No emojies found.";
+  message.textContent = "No emojis found.";
   $outlet?.appendChild(message);
 }
 
-function filterEmojies(data, query) {
+function filterEmojis(data, query) {
   const filtered = {};
   for (const [name, url] of Object.entries(data)) {
     if (name.includes(query)) {
@@ -155,7 +155,7 @@ function clearStatus() {
 function renderStatus(count) {
   const container = document.createElement("p");
   container.classList.add("status");
-  container.innerHTML = `<em>Status: ${count} emojies loaded.</em>`;
+  container.innerHTML = `<em>Status: ${count} emojis loaded.</em>`;
   const $status = document.querySelector("#status");
   $status?.appendChild(container);
 }
@@ -166,7 +166,7 @@ async function main() {
   renderFilterInput();
   showLoader();
 
-  const data = await fetchEmojies();
+  const data = await fetchEmojis();
   hideLoader();
 
   const listButton = document.querySelector(".view-list");
@@ -178,9 +178,9 @@ async function main() {
    */
   function renderView(type) {
     const query = filterInput?.value.trim().replace(/:/g, "").toLowerCase();
-    const filteredData = filterEmojies(data, query);
+    const filteredData = filterEmojis(data, query);
 
-    clearEmojies();
+    clearEmojis();
     clearStatus();
 
     if (Object.keys(filteredData).length === 0) {
@@ -189,12 +189,12 @@ async function main() {
     }
 
     if (type === "grid") {
-      renderEmojiesGrid(filteredData);
+      renderEmojisGrid(filteredData);
       localStorage.setItem("layout", "grid");
       gridButton?.classList.add("active");
       listButton?.classList.remove("active");
     } else {
-      renderEmojiesList(filteredData);
+      renderEmojisList(filteredData);
       localStorage.setItem("layout", "list");
       listButton?.classList.add("active");
       gridButton?.classList.remove("active");

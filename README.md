@@ -1,4 +1,4 @@
-# GitHub Emojies
+# GitHub Emojis
 
 _List based on GitHub API - https://api.github.com/emojis_
 
